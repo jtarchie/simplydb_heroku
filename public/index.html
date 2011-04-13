@@ -8,6 +8,7 @@
 		<li><a href="/domains">Show domains</a></li>
 		<li><a href="/domains/test">Show meta-data about the 'test' domain</a></li>
 		<li><a href="/domains/test/items">Show records in the 'test' domain</a></li>
+		<li><a href="/domains/test/items" data-method="put">Create a record in 'test'</a></li>
 	</ul>
 	<h1>JSON Response from <span id="request_url">/</span></h1>
 	<pre id="response"></pre>
@@ -19,8 +20,13 @@
 					$("#request_url").text($link.attr("href"));
 					$("#response").text(responseJSON);
 				}
-				if ($link.attr("data-remote") == "post") {
-					
+				if ($link.attr("data-method") == "put") {
+					$.post($link.attr("href") + "/" + (new Date()).getTime().toString(), {
+						item: {
+							name: "John Smith"
+						},
+						'_method':'PUT'
+					}, response);
 				} else {
 					$.get($link.attr("href"), response);
 				}
