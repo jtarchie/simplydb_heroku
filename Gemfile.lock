@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jtarchie/simplydb.git
-  revision: 860211e6dc967fd1945769eb0bdb372abbb8987f
+  revision: ff956e69ae7183e4ae5fccef83e1cec5fbc934af
   specs:
     simplydb (0.0.1)
       json
@@ -17,7 +17,7 @@ GEM
     rack (1.2.2)
     rest-client (1.6.1)
       mime-types (>= 1.16)
-    sinatra (1.2.2)
+    sinatra (1.2.3)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     tilt (1.2.2)
