@@ -21,6 +21,10 @@ class ExampleServer < SimplyDB::Server
     puts "Attempted to access domain: #{name} with arguments #{other}"
     halt unless name == "test"
   end
+  
+  get "/" do
+    send_file("public/index.html")
+  end
 end
 
 run ExampleServer
