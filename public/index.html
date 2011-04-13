@@ -1,0 +1,32 @@
+<html>
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Examples</h1>
+	<ul id="examples">
+		<li><a href="/domains">Show domains</a></li>
+		<li><a href="/domains/test">Show meta-data about the 'test' domain</a></li>
+		<li><a href="/domains/test/items">Show records in the 'test' domain</a></li>
+	</ul>
+	<h1>JSON Response from <span id="request_url">/</span></h1>
+	<pre id="response"></pre>
+	<script>
+		$(function() {
+			$("#examples a").click(function(event) {
+				var $link = $(this);
+				var response = function(responseJSON) {
+					$("#request_url").text($link.attr("href"));
+					$("#response").text(responseJSON);
+				}
+				if ($link.attr("data-remote") == "post") {
+					
+				} else {
+					$.get($link.attr("href"), response);
+				}
+				event.preventDefault();
+			})
+		});
+	</script>
+</body>
+</html>
