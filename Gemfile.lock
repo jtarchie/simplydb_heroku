@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jtarchie/simplydb.git
-  revision: ff956e69ae7183e4ae5fccef83e1cec5fbc934af
+  revision: 5328751371c8ee7d8555923bd322da190a1e9beb
   specs:
     simplydb (0.0.1)
       json
