@@ -8,7 +8,20 @@
 		<li><a href="/domains">Show domains</a></li>
 		<li><a href="/domains/test">Show meta-data about the 'test' domain</a></li>
 		<li><a href="/domains/test/items">Show records in the 'test' domain</a></li>
-		<li><a href="/domains/test/items" data-method="put">Create a record in 'test'</a></li>
+		<li>
+			<p>Create a record in 'test'</p>
+			<form action="/domains/test/items">
+				<p>
+					<label>Name</label>
+					<input type="text" name="name">
+				</p>
+				<p>
+					<label>Value</label>
+					<input type="text" name="value">
+				</p>
+				<button type="submit">Create</button>
+			</form>
+		</li>
 	</ul>
 	<h1>JSON Response from <span id="request_url">/</span></h1>
 	<pre id="response"></pre>
@@ -16,22 +29,23 @@
 		$(function() {
 			$("#examples a").click(function(event) {
 				var $link = $(this);
-				var response = function(responseJSON) {
+				$.get($link.attr("href"), function(responseJSON) {
 					$("#request_url").text($link.attr("href"));
 					$("#response").text(JSON.stringify(responseJSON, null, '  '));
-				}
-				if ($link.attr("data-method") == "put") {
-					$.post($link.attr("href") + "/" + (new Date()).getTime().toString(), {
-						item: {
-							name: "John Smith"
-						},
-						'_method':'PUT'
-					}, response);
-				} else {
-					$.get($link.attr("href"), response);
-				}
+				});
 				event.preventDefault();
-			})
+			});
+			$("#examples form").submit(function(event) {
+				var $form = $(this);
+				var item = {};
+				item[$form.find("input[name=name]").val()] = $form.find("input[name=value]").val();
+				$.post($form.attr("action") + "/" + (new Date()).getTime().toString(), {
+					item: item,
+					'_method':'PUT'
+				}, response);
+				event.preventDefault();
+				return false;
+			});
 		});
 	</script>
 </body>
