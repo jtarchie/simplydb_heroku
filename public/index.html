@@ -18,7 +18,7 @@
 				var $link = $(this);
 				var response = function(responseJSON) {
 					$("#request_url").text($link.attr("href"));
-					$("#response").text(responseJSON);
+					$("#response").text(JSON.stringify(responseJSON, null, '  '));
 				}
 				if ($link.attr("data-method") == "put") {
 					$.post($link.attr("href") + "/" + (new Date()).getTime().toString(), {
