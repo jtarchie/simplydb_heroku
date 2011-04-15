@@ -1,5 +1,5 @@
 require "spec_helper"
-require 'server'
+require './server'
 
 describe ExampleServer do
   include Rack::Test::Methods
