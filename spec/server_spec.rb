@@ -21,7 +21,7 @@ describe ExampleServer do
       last_response.status.should == 401
     end
   
-    it "returns successful for the test domain" do |variable|
+    it "returns successful for the test domain" do
       get '/domains/test'
       last_response.status.should == 200
       get '/domains/test/items'
