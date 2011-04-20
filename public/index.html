@@ -1,16 +1,31 @@
 <html>
 <head>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<style>
+		#examples {
+			float:left;
+			width: 300px;
+		}
+		input[type="text"] {
+			width: 250px;
+		}
+		#content {
+			padding-left: 50px;
+			float: left;
+			max-width: 700px;
+		}
+	</style>
 </head>
 <body>
+	<div id="examples">
 	<h1>Examples</h1>
-	<ul id="examples">
+	<ul>
 		<li><a href="/domains">Show domains</a></li>
 		<li><a href="/domains/test">Show meta-data about the 'test' domain</a></li>
 		<li><a href="/domains/test/items">Show records in the 'test' domain</a></li>
 		<li>
 			<p>Create a record in 'test'</p>
-			<form action="/domains/test/items">
+			<form action="/domains/test/items" id="add_item">
 				<p>
 					<label>Name</label>
 					<input type="text" name="name">
@@ -22,27 +37,61 @@
 				<button type="submit">Create</button>
 			</form>
 		</li>
+		<li>
+			<p>Perform a select query</p>
+			<form action="/items" id="select_query">
+				<p>
+					<label>Query</label>
+					<input type="text" name="query" value="SELECT * from test WHERE name LIKE 'John%'">
+				</p>
+				<button type="submit">Search</button>
+			</form>
+		</li>
 	</ul>
-	<h1>JSON Response from <span id="request_url">/</span></h1>
-	<pre id="response"></pre>
+	</div>
+	<div id="content">
+		<h1>JSON Response from <span id="request_url">/</span></h1>
+		<pre id="headers"></pre>
+		<pre id="response"></pre>
+	</div>
 	<script>
 		$(function() {
+			$(document).ajaxError(function(event, xhr) {
+				$("#headers").text(xhr.getAllResponseHeaders());
+				$("#response").text(JSON.stringify(JSON.parse(xhr.responseText), null, '  '));				
+			});
 			$("#examples a").click(function(event) {
 				var $link = $(this);
-				$.get($link.attr("href"), function(responseJSON) {
+				$.get($link.attr("href"), function(responseJSON, status, xhr) {
 					$("#request_url").text($link.attr("href"));
+					$("#headers").text(xhr.getAllResponseHeaders());
 					$("#response").text(JSON.stringify(responseJSON, null, '  '));
 				});
 				event.preventDefault();
 			});
-			$("#examples form").submit(function(event) {
+			$("#examples form#add_item").submit(function(event) {
 				var $form = $(this);
 				var item = {};
 				item[$form.find("input[name=name]").val()] = $form.find("input[name=value]").val();
 				$.post($form.attr("action") + "/" + (new Date()).getTime().toString(), {
 					item: item,
 					'_method':'PUT'
-				}, response);
+				}, function(responseText, status, xhr) {
+					$("#headers").text(xhr.getAllResponseHeaders());
+					$("#response").text('');
+				});
+				event.preventDefault();
+				return false;
+			});
+			$("#examples form#select_query").submit(function(event) {
+				var $form = $(this);
+				$.get($form.attr("action"), {
+					q: $form.find("input[name=query]").val(),
+				}, 	function(responseJSON, status, xhr) {
+					$("#request_url").text($form.attr("action"));
+					$("#headers").text(xhr.getAllResponseHeaders());
+					$("#response").text(JSON.stringify(responseJSON, null, '  '));
+				});
 				event.preventDefault();
 				return false;
 			});

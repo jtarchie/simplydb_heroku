@@ -9,6 +9,11 @@ class AuthenticationFilter < Sinatra::Base
   before '/domains/:name/*' do |name, other|
     halt(401) unless name == "test"
   end
+  
+  before '/items' do
+    query = params[:query] || params[:q]
+    halt(401) unless query.sub(/\s+/, ' ').downcase.include?('from test')
+  end
 end
 
 class ExampleServer < SimplyDB::Server
@@ -19,6 +24,7 @@ class ExampleServer < SimplyDB::Server
   
   set :root, File.dirname(__FILE__)
   enable :logging, :method_override
+  set :show_exceptions, false
   
   get '/' do
     content_type :html

@@ -28,4 +28,13 @@ describe ExampleServer do
       last_response.status.should == 200
     end
   end
+  
+  describe "authentication on items" do
+    it "halts on SELECT queries not for the test domain" do
+      get '/items', :q => "SELECT * FROM other"
+      last_response.status.should == 401
+      get '/items', :q => "SELECT * FROM test"
+      last_response.status.should == 200
+    end
+  end
 end
