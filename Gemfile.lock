@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jtarchie/simplydb.git
-  revision: ba955aeaa914bcc2b91a586cf935911cf4ff0ec7
+  revision: 466ce480a9d558f83e7ffcd72e05328e257407d5
   specs:
     simplydb (0.0.3)
       json
@@ -32,7 +32,7 @@ GEM
     rspec-mocks (2.5.0)
     sinatra (1.2.3)
       rack (~> 1.1)
-      tilt (>= 1.2.2, < 2.0)
+      tilt (< 2.0, >= 1.2.2)
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)

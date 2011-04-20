@@ -58,7 +58,12 @@
 		$(function() {
 			$(document).ajaxError(function(event, xhr) {
 				$("#headers").text(xhr.getAllResponseHeaders());
-				$("#response").text(JSON.stringify(JSON.parse(xhr.responseText), null, '  '));				
+				var responseText = xhr.responseText;
+				if (responseText.length > 2) {
+					$("#response").text(JSON.stringify(JSON.parse(xhr.responseText), null, '  '));
+				} else {
+					$("#response").text('');
+				}
 			});
 			$("#examples a").click(function(event) {
 				var $link = $(this);
