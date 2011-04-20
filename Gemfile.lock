@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/jtarchie/simplydb.git
-  revision: 5328751371c8ee7d8555923bd322da190a1e9beb
+  revision: ba955aeaa914bcc2b91a586cf935911cf4ff0ec7
   specs:
-    simplydb (0.0.1)
+    simplydb (0.0.3)
       json
       nokogiri
       rest-client
